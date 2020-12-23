@@ -50,7 +50,7 @@ function ScrollTop(props) {
 }
 
 function Home(props) {
-    let clearKeys = ["pokeImg", "pokeName"]
+    let clearKeys = ["pokeImg", "pokeName", "id"]
     return (
         <>
         {clearKeys.forEach(k =>localStorage.removeItem(k))}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PokemonDetailContainer } from "../containers/PokemonDetailContainer";
 import Fab from '@material-ui/core/Fab';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
@@ -63,16 +63,19 @@ function ClickableFAB(props) {
 );
 }
 
-function PokemonDetail(props) {
+function PokemonDetail() {
   const classes = useStyles();
   const [open1, setOpen1] = useState(false);
   const [openFailed, setOpenFailed] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
-  const [status, setStatus] = useState(false);
   const [isActive, setActive] = useState(true);
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [inputRef, setInputRef] = useState("");
+  const inputRef = useRef("");
+  let pokeObj = {}
   const [inventory, setInventory] = useState([]);
+  let timestamp = Date.now();
+  timestamp = new Intl.DateTimeFormat('en-US', {day: '2-digit', month: 'long', year: 'numeric', 
+  hour: 'numeric', minute: 'numeric', hour12: false}).format(timestamp);
 
   const handleClickOpen1 = () => {
     setOpen1(true);
@@ -83,31 +86,18 @@ function PokemonDetail(props) {
   const handleFailed = () => {
     setOpenFailed(false);
   };
+  
   const handleSuccess = () => {
-    setStatus(true);
-    if(status){
-      // if(!localStorage['inventory']){
-      //   setInventory([{
-      //     name: localStorage.getItem("pokeName"),
-      //     collections: [{
-      //       nickName: inputRef,
-      //     }]
-      //   }]);
-        
-      //   console.log(inventory);
-      //   } else {
-          var prev = JSON.parse(localStorage.getItem("inventory"));
-          setInventory(prevstate => ({
-            name: localStorage.getItem("pokeName"),
-            collections: [{
-              nickName: prevstate.collections.concat(inputRef),
-            }]
-          }));
-        // }
+    pokeObj = {
+      id: localStorage.getItem("id"),
+      pokeName: localStorage.getItem("pokeName"),
+      nickName: inputRef.current.value,
+      date: timestamp,
+      img: localStorage.getItem("pokeImg")
     }
-    
-    setInputRef("");
-    localStorage.setItem("inventory", JSON.stringify(inventory));
+    setInventory( localStorage.getItem("inventory") ? Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.id !== "").concat(pokeObj) : [pokeObj]);
+    inputRef.current.value = "";
+    window.location.reload();
     setOpenSuccess(false);
   };
 
@@ -119,20 +109,21 @@ function PokemonDetail(props) {
       setTimeout(function(){setActive(true); disableScroll.on();
         if(true){
           setOpenSuccess(true);
-          console.log("dapet");
         } else {
-          setStatus(false);
           setOpenFailed(true);
-          console.log("lepas");
         }
       }, 1000); 
     }
     if (open1){
       setOpen1(false);
     }
+    if(inventory.length > 0){
+      
+    
+      localStorage.setItem("inventory", JSON.stringify(inventory));
+    }
 
-
-  }, [isActive, disableScroll.off()]);
+  }, [inventory, openSuccess, isActive, disableScroll.off()]);
 
  
 
@@ -202,14 +193,15 @@ function PokemonDetail(props) {
             />
           </Paper>    
           
-          <Grid container direction="column" alignContent="center" justify="center">
+          <Grid container direction="column" alignContent="scretch" justify="center">
             <Grid item xs={12}>
-          <Box my={3}>
+          <Box my={2}>
             <TextField
-            value={inputRef}
         placeholder="e.g. Nakama"
         label="Name"  
-        onChange={(text) => (setBtnDisabled(!text.target.value), setInputRef(text.target.value))}
+        fullWidth
+        inputRef={inputRef} 
+        onChange={(text) => (setBtnDisabled(!text.target.value))}
         InputLabelProps={{
           shrink: true,
         }}

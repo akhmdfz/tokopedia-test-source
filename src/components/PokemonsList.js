@@ -71,6 +71,7 @@ const useStyles = makeStyles(() => ({
       marginBottom: '0.5rem',
       fontWeight: "bold",
       fontSize: 18,
+      float: 'right'
     }),
   
 }));
@@ -145,7 +146,8 @@ export const PokemonList = React.memo(function PokemonLists({pokemons, onLoadMor
                             loading = {loading}
                             classes={Styles(data.vibrant)}
                             title={x.name}
-                            subtitle={'Owned Total : 0'}
+                            subtitle={"Owned : " + Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName == x.name.charAt(0).toUpperCase() + x.name.slice(1)
+                            ).length}
                             image={x.image}
                         />              
                           )}

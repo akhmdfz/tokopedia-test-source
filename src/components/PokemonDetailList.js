@@ -11,6 +11,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import HistoryIcon from "@material-ui/icons/History";
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { NavLink, useParams } from "react-router-dom";
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -38,7 +39,7 @@ function PokemonAbilityContainer({abilityURL}) {
     })
       
       return () => isSubscribed = false
-    }, [])
+    }, [localStorage.getItem("inventory")])
 
 
   return (
@@ -47,7 +48,7 @@ function PokemonAbilityContainer({abilityURL}) {
         <>
         {abilityData.effect_entries.map((x) => 
           <Typography variant="body1" key={x.effect} align="justify">
-              {x.language.name == "en" && x.effect}
+              {x.language.name === "en" && x.effect}
            </Typography>
         )}
         </>
@@ -57,14 +58,13 @@ function PokemonAbilityContainer({abilityURL}) {
   )
 }
 
-export const PokemonDetailList = React.memo(function PokemonDetail({
-  pokemon,
-}) {
+export const PokemonDetailList = React.memo(function PokemonDetail({pokemon}) {
   let { id, name } = useParams();
   let typoTheme = responsiveFontSizes(createMuiTheme());
   return (
     <>
-    {localStorage.setItem("pokeName", name.charAt(0).toUpperCase() + name.slice(1))}
+    {localStorage.setItem("pokeName", name.charAt(0).toUpperCase() + name.slice(1)),
+    localStorage.setItem("id", id)}
       <Container maxWidth={"xl"}>
       <Box>
               <Typography
@@ -127,25 +127,55 @@ export const PokemonDetailList = React.memo(function PokemonDetail({
                   </Paper>
                 </Grid>
                 <Box mt={3}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} css={css`
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap;
+                    `}>
+                  {Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName === name.charAt(0).toUpperCase() + name.slice(1)
+                        ).length > 0 ? (
+                          <>
+                          
                     <CheckCircleIcon
                       fontSize="large"
                       css={css`
                         color: #2f79d9;
                         display: inline;
-                        margin-right: 1rem;
+                        margin-right: 0.5rem;
                       `}
                     />
                     <ThemeProvider theme={typoTheme}>
                       <Typography
-                        variant="h3"
+                        variant="h4"
                         css={css`
                           display: inline;
-                        `}
-                      >
-                        Owned: 0
+                        `}>
+                        {Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName === name.charAt(0).toUpperCase() + name.slice(1)
+                        ).length} in Pokebag
                       </Typography>
                     </ThemeProvider>
+                          </>
+                        ) : (
+                          <>
+                          <RemoveCircleIcon
+                          fontSize="large"
+                          css={css`
+                          color: #9ea9b1;
+                            display: inline;
+                            margin-right: 0.5rem;
+                          `} />
+                    <ThemeProvider theme={typoTheme}>
+                      <Typography
+                        variant="h4"
+                        css={css`
+                        color: #9ea9b1;
+                          display: inline;
+                        `}>
+                          You have none
+                      </Typography>
+                    </ThemeProvider>                          
+                          </>
+                        )}
                   </Grid>
                 </Box>
                 <Box mt={1}>
@@ -178,7 +208,15 @@ export const PokemonDetailList = React.memo(function PokemonDetail({
                           opacity: 0.7;
                         `}
                       >
-                        20 December 2020 1:45 P.M
+                  {Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName === name.charAt(0).toUpperCase() + name.slice(1)).length > 0 ? (
+                          <>
+                          {Object.values(JSON.parse(localStorage.getItem("inventory"))).sort((a,b) => {return new Date(b.date) - new Date(a.date)}).filter(ele => ele.pokeName === name.charAt(0).toUpperCase() + name.slice(1))[0].date}
+                          </>
+                        ) : (
+                          <>
+                          N/A
+                          </>
+                        )}      
                       </Typography>
                     </ThemeProvider>
                   </Grid>

@@ -26,6 +26,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+        {!localStorage.getItem("inventory") && localStorage.setItem("inventory", JSON.stringify([{id: '',pokeName: '', nickName: '', date: '', img: ''}]))}
             <ApolloProvider client={client}>
                 <Router>
                     <Navbar/>
