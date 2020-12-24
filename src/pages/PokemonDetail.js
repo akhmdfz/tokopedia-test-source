@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer } from "react";
 import { PokemonDetailContainer } from "../containers/PokemonDetailContainer";
 import Fab from '@material-ui/core/Fab';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
@@ -73,6 +73,7 @@ function PokemonDetail() {
   const inputRef = useRef("");
   let pokeObj = {}
   const [inventory, setInventory] = useState([]);
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
   let timestamp = Date.now();
   timestamp = new Intl.DateTimeFormat('en-US', {day: '2-digit', month: 'long', year: 'numeric', 
   hour: 'numeric', minute: 'numeric', hour12: false}).format(timestamp);
@@ -97,7 +98,7 @@ function PokemonDetail() {
     }
     setInventory( localStorage.getItem("inventory") ? Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.id !== "").concat(pokeObj) : [pokeObj]);
     inputRef.current.value = "";
-    window.location.reload();
+    forceUpdate();
     setOpenSuccess(false);
   };
 
@@ -136,7 +137,7 @@ function PokemonDetail() {
       height:200px;
       background: url('/img/pokeball.png') center center/cover no-repeat;`}></Paper></Box>}
       text='Catching...'>
-      <PokemonDetailContainer />
+      <PokemonDetailContainer forceUpdate={_}/>
       <ClickableFAB>
       <Fab onClick={handleClickOpen1} variant="round" css={css`
           width:100px;

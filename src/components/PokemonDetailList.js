@@ -58,9 +58,13 @@ function PokemonAbilityContainer({abilityURL}) {
   )
 }
 
-export const PokemonDetailList = React.memo(function PokemonDetail({pokemon}) {
+export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, forceUpdate}) {
   let { id, name } = useParams();
   let typoTheme = responsiveFontSizes(createMuiTheme());
+  const [updated, setUpdated] = useState(0);
+  useEffect(()=>{
+    setUpdated(forceUpdate);
+  },[forceUpdate])
   return (
     <>
     {localStorage.setItem("pokeName", name.charAt(0).toUpperCase() + name.slice(1)),

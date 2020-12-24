@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {Container, Box, Divider, Button, Paper } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Color from "color";
@@ -19,8 +19,9 @@ import Slide from '@material-ui/core/Slide';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {css, jsx} from '@emotion/react';
-import { blue} from '@material-ui/core/colors';
+import { blue, red} from '@material-ui/core/colors';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { NavLink } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -94,11 +95,11 @@ const dialogStyle = makeStyles(()=>({
 }))
 
 const CustomButton = withStyles((theme) => ({
-    root: ({color, width}) => ({
+    root: ({color, bgColor, width}) => ({
       color: theme.palette.getContrastText(color),
       backgroundColor: color,
       '&:hover': {
-        backgroundColor: blue[600],
+        backgroundColor: bgColor[600],
       },
       borderRadius: '2rem',
       fontSize: '0.3em',
@@ -112,12 +113,14 @@ const CustomButton = withStyles((theme) => ({
 export const Pokebag = React.memo(function Pokebag() {
     const [open, setOpen] = useState(false);
     const [selectedPokemon, setSelectedPokemon] = useState({});
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
     let addColor = {}
     const handleOpen = (id, color) => {
         setOpen(!open);
         addColor = Object.values(JSON.parse(localStorage.getItem("inventory"))).map((x) => {
             return {
                 ...x,
+                listId: id,
                 color: color
             }
         })
@@ -126,8 +129,12 @@ export const Pokebag = React.memo(function Pokebag() {
     const handleClose = () => {
         setOpen(false)
     }
+    const releasePokemon = (id) => {
+        localStorage.setItem("inventory", JSON.stringify(Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(function (x, i) {return i!==id} )));
+        setOpen(false);
+        forceUpdate();
+    }
     useEffect(() => {
-        console.log(selectedPokemon)
     }, [])
   const Styles = (colors) => useStyles({ color: colors });
   const classes = dialogStyle();
@@ -243,7 +250,7 @@ export const Pokebag = React.memo(function Pokebag() {
         </Grid>
             <Grid item xs={11} sm={7} md={7} lg={7} xl={7}>
         <Box mx={1} pt={3} >
-            <CustomButton color="#00478C" width={"-webkit-fill-available"}>
+            <CustomButton color="#00478C" bgColor={blue} width={"-webkit-fill-available"} component={NavLink} to={"/detail/"+selectedPokemon.id+"/"+selectedPokemon.pokeName}>
             <Typography css={css`
                       display: flex;
                       align-items: center;
@@ -256,7 +263,7 @@ export const Pokebag = React.memo(function Pokebag() {
             </Grid>
             <Grid item xs={11} sm={5} md={5} lg={5} xl={5}>
             <Box mx={1} pt={3} >
-            <CustomButton color="#DB2E2E" width={"-webkit-fill-available"}>
+            <CustomButton color="#DB2E2E" bgColor={red} width={"-webkit-fill-available"} onClick={() => {window.confirm('Sure to release this pokemon?') && releasePokemon(selectedPokemon.listId)}}>
             <Typography css={css`
                       display: flex;
                       align-items: center;

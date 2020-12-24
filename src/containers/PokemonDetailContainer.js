@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import {PokemonDetailList} from "../components/PokemonDetailList";
 
 
-export function PokemonDetailContainer() {
+export function PokemonDetailContainer({forceUpdate}) {
     let { id } = useParams();
     let isSubscribed = true
     const [pokemonData, setPokemonData] = useState(null)
@@ -36,18 +36,15 @@ export function PokemonDetailContainer() {
         })
         
         return () => isSubscribed = false
-      }, [])
-
-    
-
-
+      }, []) 
 
 
     return (
         <>
             {pokemonData !== null ? (
                 <PokemonDetailList
-                    pokemon={pokemonData}>
+                    pokemon={pokemonData}
+                    forceUpdate={forceUpdate}>
 
                     </PokemonDetailList>
             ) : <CircularProgress />}
