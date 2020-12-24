@@ -249,7 +249,7 @@ export const Pokebag = React.memo(function Pokebag() {
         </Grid>
             <Grid item xs={11} sm={7} md={7} lg={7} xl={7}>
         <Box mx={1} pt={3} >
-            <CustomButton colors="#00478C" bgcolor={blue} width={"-webkit-fill-available"} component={NavLink} to={"/detail/"+selectedPokemon.id+"/"+selectedPokemon.pokeName}>
+            <CustomButton colors="#00478C" bgcolor={blue} width={"-webkit-fill-available"} component={NavLink} to={"/tokopedia-test/detail/"+selectedPokemon.id+"/"+selectedPokemon.pokeName}>
             <Typography css={css`
                       display: flex;
                       align-items: center;

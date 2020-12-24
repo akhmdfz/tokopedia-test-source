@@ -31,9 +31,9 @@ function App() {
                 <Router>
                     <Navbar/>
                     <Switch>
-                        <Route path='/' exact component={Home}/>
-                        <Route path='/pokebag' component={Pokebag}/>
-                        <Route path='/detail/:id/:name' component={PokemonDetail}/>
+                        <Route path='/tokopedia-test' exact component={Home}/>
+                        <Route path='/tokopedia-test/pokebag' component={Pokebag}/>
+                        <Route path='/tokopedia-test/detail/:id/:name' component={PokemonDetail}/>
                     </Switch>
                 </Router>
             </ApolloProvider>

@@ -35,12 +35,12 @@ const styles = theme => ({
 const NavBarCollapse = props => (
   <div className={props.classes.root}>
     <ButtonAppBarCollapse>
-      <MenuItem><NavLink className={props.classes.link} to="/">Pokemon List</NavLink></MenuItem>
-      <MenuItem><NavLink className={props.classes.link} to="/pokebag">My Pokebag</NavLink></MenuItem>
+      <MenuItem><NavLink className={props.classes.link} to="/tokopedia-test/">Pokémon List</NavLink></MenuItem>
+      <MenuItem><NavLink className={props.classes.link} to="/tokopedia-test/pokebag">My Pokébag</NavLink></MenuItem>
     </ButtonAppBarCollapse>
     <div className={props.classes.buttonBar} id="appbar-collapse">
-      <Button><NavLink className={props.classes.link} to="/">Pokemon List</NavLink></Button>
-      <Button><NavLink className={props.classes.link} to="/pokebag">My Pokebag</NavLink></Button>
+      <Button><NavLink className={props.classes.link} to="/tokopedia-test/">Pokémon List</NavLink></Button>
+      <Button><NavLink className={props.classes.link} to="/tokopedia-test/pokebag">My Pokébag</NavLink></Button>
     </div>
   </div>
 );

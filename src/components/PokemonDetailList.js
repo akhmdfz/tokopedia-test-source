@@ -280,7 +280,7 @@ export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, for
             )}
             
             <Box my={2}>
-                    <NavLink to="/pokebag">
+                    <NavLink to="/tokopedia-test/pokebag">
                       <Typography
                         css={css`
                           font-weight: 600;

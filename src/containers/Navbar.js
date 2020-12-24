@@ -56,7 +56,7 @@ export default function Navbar() {
                                             <Box ml={2}
                                                 mb={2}>
                                                 <Hidden xsDown>
-                                                    Kiblatnya pokemon anak Indonesia
+                                                    Kiblatnya Pokémon anak Indonesia
                                                 </Hidden>
                                             </Box>
                                         </CustomTypography>

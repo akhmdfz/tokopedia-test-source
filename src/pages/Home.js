@@ -59,7 +59,7 @@ function Home(props) {
         <Hidden mdDown>
             <div css={
                 css `
-                    background: url('/img/home.png') center center/cover no-repeat;
+                    background: url('/tokopedia-test/img/home.png') center center/cover no-repeat;
                     height: 90vh;
                     width: 100%;
                     display: flex;
@@ -74,7 +74,7 @@ function Home(props) {
             <Hidden only={['lg', 'xl', 'xs']}>
             <div css={
                 css `
-                    background: url('/img/home-md.png') center center/cover no-repeat;
+                    background: url('/tokopedia-test/img/home-md.png') center center/cover no-repeat;
                     height: 110vh;
                     width: 100%;
                     display: flex;
@@ -90,7 +90,7 @@ function Home(props) {
             <Hidden smUp>
             <div css={
                 css `
-                    background: url('/img/home-xs.png') center center/cover no-repeat;
+                    background: url('/tokopedia-test/img/home-xs.png') center center/cover no-repeat;
                     height: 80vh;
                     width: 100%;
                     display: flex;

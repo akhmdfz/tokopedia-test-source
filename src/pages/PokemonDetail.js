@@ -124,13 +124,13 @@ function PokemonDetail() {
       spinner={<Box mb={4}><Paper elevation={0} css={css`
       width:200px;
       height:200px;
-      background: url('/img/pokeball.png') center center/cover no-repeat;`}></Paper></Box>}
+      background: url('/tokopedia-test/img/pokeball.png') center center/cover no-repeat;`}></Paper></Box>}
       text='Catching...'>
       <PokemonDetailContainer forceUpdate={_}/>
       <Fab onClick={handleClickOpen1} variant="round" css={css`
           width:100px;
           height:100px;
-          background: url('/img/pokeball.png') center center/cover no-repeat;`} className={classes.root}>
+          background: url('/tokopedia-test/img/pokeball.png') center center/cover no-repeat;`} className={classes.root}>
             .
       </Fab>
 
@@ -228,9 +228,8 @@ function PokemonDetail() {
         </Box>
         </DialogTitle>
         <DialogContent>
-
           <Box mb={8}>
-          <Typography variant="h4" component={'span'} align="center">
+          <Typography variant="h4" align="center">
             Oops <strong>{localStorage.getItem("pokeName")}</strong> has run away, better luck next time trainer!
           </Typography>
           </Box>            

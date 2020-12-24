@@ -41,7 +41,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://akhmdfz.github.io/tokopedia-test/",
+  "homepage": "/tokopedia-test/",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -79,7 +79,7 @@ const useStyles = makeStyles(() => ({
 const CustomCard = ({ classes, image, title, subtitle, id, name, loading }) => {
 
   return (
-    <CardActionArea className={classes.actionArea} component={NavLink} to={"/detail/"+id+"/"+name}>
+    <CardActionArea className={classes.actionArea} component={NavLink} to={"/tokopedia-test/detail/"+id+"/"+name}>
       <Card className={classes.card} >
       {loading ? (<Skeleton animation="wave" variant="rect"/>) : 
       (<CardMedia className={classes.media} image={image}>
