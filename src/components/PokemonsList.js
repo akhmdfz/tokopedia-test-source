@@ -146,7 +146,7 @@ export const PokemonList = React.memo(function PokemonLists({pokemons, onLoadMor
                             loading = {loading}
                             classes={Styles(data.vibrant)}
                             title={x.name}
-                            subtitle={"Owned : " + Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName == x.name.charAt(0).toUpperCase() + x.name.slice(1)
+                            subtitle={"Owned : " + Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.pokeName === x.name.charAt(0).toUpperCase() + x.name.slice(1)
                             ).length}
                             image={x.image}
                         />              

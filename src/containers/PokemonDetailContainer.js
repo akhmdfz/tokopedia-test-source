@@ -7,18 +7,18 @@ import {PokemonDetailList} from "../components/PokemonDetailList";
 
 export function PokemonDetailContainer({forceUpdate}) {
     let { id } = useParams();
-    let isSubscribed = true
+    const [isSubscribed, setIsSubscribed] = useState(true)
     const [pokemonData, setPokemonData] = useState(null)
-    const [loading, setLoading] = useState(true);
     const initialURL = 'https://pokeapi.co/api/v2/pokemon/';
 
-    const loadPokemonMoves = async (data) => {
+
+    useEffect(() => {
+      const loadPokemonMoves = async (data) => {
         let _pokemonData = await Promise.all(data.moves.map(async x => {
           let pokemonRecord = await getPokemon(x.move.url)
           return pokemonRecord
         }))
         if(isSubscribed){        
-          setLoading(false);
           setPokemonData({
             ...data,
             moves_detail: [..._pokemonData]
@@ -26,17 +26,16 @@ export function PokemonDetailContainer({forceUpdate}) {
       }
 
       }
-    useEffect(() => {
         async function fetchData() {
           return await getPokemon(initialURL + id);
         }
         fetchData().then( x => {
-                loadPokemonMoves(x);
+          loadPokemonMoves(x);
 
         })
         
-        return () => isSubscribed = false
-      }, []) 
+        return () => setIsSubscribed(false)
+      }, [id, isSubscribed]) 
 
 
     return (

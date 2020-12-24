@@ -8,12 +8,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Skeleton from "@material-ui/lab/Skeleton";
 import { Palette } from "react-palette";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 /** @jsxRuntime classic */
@@ -95,11 +93,11 @@ const dialogStyle = makeStyles(()=>({
 }))
 
 const CustomButton = withStyles((theme) => ({
-    root: ({color, bgColor, width}) => ({
-      color: theme.palette.getContrastText(color),
-      backgroundColor: color,
+    root: ({colors, bgcolor, width}) => ({
+      color: theme.palette.getContrastText(colors),
+      backgroundColor: colors,
       '&:hover': {
-        backgroundColor: bgColor[600],
+        backgroundColor: bgcolor[600],
       },
       borderRadius: '2rem',
       fontSize: '0.3em',
@@ -113,7 +111,9 @@ const CustomButton = withStyles((theme) => ({
 export const Pokebag = React.memo(function Pokebag() {
     const [open, setOpen] = useState(false);
     const [selectedPokemon, setSelectedPokemon] = useState({});
+    /*eslint-disable no-unused-vars*/
     const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+    /*eslint-enable no-unused-vars*/
     let addColor = {}
     const handleOpen = (id, color) => {
         setOpen(!open);
@@ -162,24 +162,24 @@ export const Pokebag = React.memo(function Pokebag() {
                     <Palette src={x.img}>
                       {({ data }) => (
                           <>
-    <CardActionArea
-      className={Styles(data.vibrant).actionArea} onClick={() => handleOpen(i, data.vibrant)}>
-      <Card className={Styles(data.vibrant).card}>
-          <CardMedia className={Styles(data.vibrant).media} image={x.img}>
-            <div className={Styles(data.vibrant).contentTag}>
-              <div className={Styles(data.vibrant).tag}>
-                {("0000" + x.id).slice(-"0000".length)}
-              </div>
-            </div>
-          </CardMedia>
-          <CardContent className={Styles(data.vibrant).content}>
-            <Typography className={Styles(data.vibrant).title} variant={"h2"} noWrap>
-              {x.pokeName}
-            </Typography>
-            <Typography className={Styles(data.vibrant).subtitle}>{x.nickName}</Typography>
-          </CardContent>
-      </Card>
-    </CardActionArea>                        
+                            <CardActionArea
+                            className={Styles(data.vibrant).actionArea} onClick={() => handleOpen(i, data.vibrant)}>
+                            <Card className={Styles(data.vibrant).card}>
+                                <CardMedia className={Styles(data.vibrant).media} image={x.img}>
+                                    <div className={Styles(data.vibrant).contentTag}>
+                                    <div className={Styles(data.vibrant).tag}>
+                                        {("0000" + x.id).slice(-"0000".length)}
+                                    </div>
+                                    </div>
+                                </CardMedia>
+                                <CardContent className={Styles(data.vibrant).content}>
+                                    <Typography className={Styles(data.vibrant).title} variant={"h2"} noWrap>
+                                    {x.pokeName}
+                                    </Typography>
+                                    <Typography className={Styles(data.vibrant).subtitle}>{x.nickName}</Typography>
+                                </CardContent>
+                            </Card>
+                            </CardActionArea>                        
                         </>
                       )}
                     </Palette>
@@ -204,7 +204,6 @@ export const Pokebag = React.memo(function Pokebag() {
       </Box>
       </DialogTitle>
       <DialogContent css={css`background: ${selectedPokemon.color}`}>
-        <DialogContentText>
         <Paper
           elevation={0}
           css={css`
@@ -213,6 +212,7 @@ export const Pokebag = React.memo(function Pokebag() {
             background: ${selectedPokemon.color};
             `}>
           <img
+          alt="high-res-poke-img"
             src={selectedPokemon.img}
             css={css`
               width: 150px;
@@ -222,7 +222,6 @@ export const Pokebag = React.memo(function Pokebag() {
             `}
           />
         </Paper>
-        </DialogContentText>
       </DialogContent>
       <DialogActions>
           <Box pb={4}>
@@ -250,7 +249,7 @@ export const Pokebag = React.memo(function Pokebag() {
         </Grid>
             <Grid item xs={11} sm={7} md={7} lg={7} xl={7}>
         <Box mx={1} pt={3} >
-            <CustomButton color="#00478C" bgColor={blue} width={"-webkit-fill-available"} component={NavLink} to={"/detail/"+selectedPokemon.id+"/"+selectedPokemon.pokeName}>
+            <CustomButton colors="#00478C" bgcolor={blue} width={"-webkit-fill-available"} component={NavLink} to={"/detail/"+selectedPokemon.id+"/"+selectedPokemon.pokeName}>
             <Typography css={css`
                       display: flex;
                       align-items: center;
@@ -263,7 +262,7 @@ export const Pokebag = React.memo(function Pokebag() {
             </Grid>
             <Grid item xs={11} sm={5} md={5} lg={5} xl={5}>
             <Box mx={1} pt={3} >
-            <CustomButton color="#DB2E2E" bgColor={red} width={"-webkit-fill-available"} onClick={() => {window.confirm('Sure to release this pokemon?') && releasePokemon(selectedPokemon.listId)}}>
+            <CustomButton colors="#DB2E2E" bgcolor={red} width={"-webkit-fill-available"} onClick={() => {window.confirm('Sure to release this pokemon?') && releasePokemon(selectedPokemon.listId)}}>
             <Typography css={css`
                       display: flex;
                       align-items: center;

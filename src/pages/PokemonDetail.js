@@ -9,7 +9,6 @@ import {css, jsx} from '@emotion/react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { green, red, yellow } from '@material-ui/core/colors';
@@ -52,16 +51,6 @@ const CustomButton = withStyles((theme) => ({
   }),
 }))(Button);
 
-function ClickableFAB(props) {
-  const {children} = props;
-  const classes = useStyles();
-
-  return (
-      <div className={classes.root}>
-          {children}
-      </div>
-);
-}
 
 function PokemonDetail() {
   const classes = useStyles();
@@ -108,7 +97,7 @@ function PokemonDetail() {
   useEffect(() => {
     if (!isActive) {
       setTimeout(function(){setActive(true); disableScroll.on();
-        if(true){
+        if(Math.random() < 0.5){
           setOpenSuccess(true);
         } else {
           setOpenFailed(true);
@@ -123,8 +112,8 @@ function PokemonDetail() {
     
       localStorage.setItem("inventory", JSON.stringify(inventory));
     }
-
-  }, [inventory, openSuccess, isActive, disableScroll.off()]);
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ inventory, openSuccess, isActive, disableScroll.off()]);
 
  
 
@@ -138,13 +127,12 @@ function PokemonDetail() {
       background: url('/img/pokeball.png') center center/cover no-repeat;`}></Paper></Box>}
       text='Catching...'>
       <PokemonDetailContainer forceUpdate={_}/>
-      <ClickableFAB>
       <Fab onClick={handleClickOpen1} variant="round" css={css`
           width:100px;
           height:100px;
-          background: url('/img/pokeball.png') center center/cover no-repeat;`}>
+          background: url('/img/pokeball.png') center center/cover no-repeat;`} className={classes.root}>
+            .
       </Fab>
-      </ClickableFAB>
 
       <Dialog 
       classes={{paper: classes.dialogRoot}}
@@ -173,7 +161,6 @@ function PokemonDetail() {
         </Box>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
 
           <Paper
             elevation={0}
@@ -181,7 +168,7 @@ function PokemonDetail() {
               text-align: center;
               border-radius: 2rem;
               `}>
-            <img
+            <img alt="high-res-poke-img"
               src={
                 localStorage.getItem("pokeImg")
               }
@@ -194,7 +181,7 @@ function PokemonDetail() {
             />
           </Paper>    
           
-          <Grid container direction="column" alignContent="scretch" justify="center">
+          <Grid container direction="column" alignContent="stretch" justify="center">
             <Grid item xs={12}>
           <Box my={2}>
             <TextField
@@ -211,7 +198,6 @@ function PokemonDetail() {
           </Box>
           </Grid>
           </Grid>
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Grid container direction="column" alignContent="center" justify="center">
@@ -242,14 +228,12 @@ function PokemonDetail() {
         </Box>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
 
           <Box mb={8}>
-          <Typography variant="h4" align="center">
+          <Typography variant="h4" component={'span'} align="center">
             Oops <strong>{localStorage.getItem("pokeName")}</strong> has run away, better luck next time trainer!
           </Typography>
           </Box>            
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Grid container direction="column" alignContent="center" justify="center">
@@ -289,14 +273,13 @@ function PokemonDetail() {
         </Box>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
           <Paper
             elevation={0}
             css={css`
               text-align: center;
               border-radius: 2rem;
               `}>
-            <img
+            <img alt="high-res-poke"
               src={
                 localStorage.getItem("pokeImg")
               }
@@ -308,7 +291,6 @@ function PokemonDetail() {
               `}
             />
           </Paper>
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Grid container direction="column" alignContent="center" justify="center">

@@ -1,4 +1,6 @@
-import React from 'react'; // eslint-disable-line no-use-before-define
+/*eslint-disable no-unused-vars*/
+import React from 'react';
+ /*eslint-enable no-unused-vars*/
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';

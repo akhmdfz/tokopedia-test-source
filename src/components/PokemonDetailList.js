@@ -39,15 +39,16 @@ function PokemonAbilityContainer({abilityURL}) {
     })
       
       return () => isSubscribed = false
-    }, [localStorage.getItem("inventory")])
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [localStorage.getItem("inventory"), abilityURL])
 
 
   return (
     <>
       {abilityData !== null ? (
         <>
-        {abilityData.effect_entries.map((x) => 
-          <Typography variant="body1" key={x.effect} align="justify">
+        {abilityData.effect_entries.map((x,i) => 
+          <Typography variant="body1" key={i} align="justify">
               {x.language.name === "en" && x.effect}
            </Typography>
         )}
@@ -63,16 +64,16 @@ export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, for
   let typoTheme = responsiveFontSizes(createMuiTheme());
   const [updated, setUpdated] = useState(0);
   useEffect(()=>{
-    setUpdated(forceUpdate);
-  },[forceUpdate])
+    setUpdated(forceUpdate);   // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[updated, forceUpdate])
   return (
     <>
-    {localStorage.setItem("pokeName", name.charAt(0).toUpperCase() + name.slice(1)),
-    localStorage.setItem("id", id)}
+    {localStorage.setItem("pokeName", name.charAt(0).toUpperCase() + name.slice(1))}
+    {localStorage.setItem("id", id)}
       <Container maxWidth={"xl"}>
       <Box>
               <Typography
-                variant="h4"
+                variant="h4" component={'span'}
                 css={css`
                   font-weight: 600;
                   opacity: 0.37;
@@ -118,6 +119,7 @@ export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, for
                   >
                     {localStorage.setItem("pokeImg", pokemon.sprites.other["official-artwork"].front_default)}
                     <img
+                    alt="high-res-poke-img"
                       src={
                         pokemon.sprites.other["official-artwork"].front_default
                       }
@@ -241,10 +243,9 @@ export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, for
               </Typography>
             </Box>
             <Box mt={1}>
-                {pokemon.types.map((x) => 
-                    <Chip component={Typography} label={x.type.name.charAt(0).toUpperCase() + x.type.name.slice(1)} 
+                {pokemon.types.map((x,i) => 
+                    <Chip key={i} component={Typography} label={x.type.name.charAt(0).toUpperCase() + x.type.name.slice(1)} 
                     css={css`color: white; margin-right: 0.4rem; font-size: 1em; background-color: ${typeLabelColors[x.type.name]}`}/>
-
                 )}                
             </Box>
 
@@ -260,9 +261,9 @@ export const PokemonDetailList = React.memo(function PokemonDetail({pokemon, for
               </Typography>
             </Box>         
 
-            {pokemon.abilities.map((x) =>
+            {pokemon.abilities.map((x,i) =>
             <>
-            <Box mt={1} css={css`
+            <Box mt={1} key={i} css={css`
                       display: flex;
                       align-items: center;
                       flex-wrap: wrap;`}>
