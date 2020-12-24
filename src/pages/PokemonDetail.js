@@ -119,11 +119,12 @@ function PokemonDetail() {
 
 
   return (
-    <LoadingOverlay
+    <LoadingOverlay 
       active={!isActive}
       spinner={<Box mb={4}><Paper elevation={0} css={css`
       width:200px;
       height:200px;
+      overflow-y: scroll;
       background: url('/tokopedia-test/img/pokeball.png') center center/cover no-repeat;`}></Paper></Box>}
       text='Catching...'>
       <PokemonDetailContainer forceUpdate={_}/>
