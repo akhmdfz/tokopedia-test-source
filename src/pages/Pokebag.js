@@ -156,7 +156,7 @@ export const Pokebag = React.memo(function Pokebag() {
                         </Grid>
           <Grid item xs={12} zeroMinWidth>
             <Grid container justify="center" spacing={4}>
-              {Object.values(JSON.parse(localStorage.getItem("inventory"))).map(
+              {Object.values(JSON.parse(localStorage.getItem("inventory"))).filter(ele => ele.id !== "").length > 0 ? (Object.values(JSON.parse(localStorage.getItem("inventory"))).map(
                 (x, i) => (
                   <Grid key={i} item xs={8} sm={4} md={3} lg={2}>
                     <Palette src={x.img}>
@@ -185,7 +185,13 @@ export const Pokebag = React.memo(function Pokebag() {
                     </Palette>
                   </Grid>
                 )
-              )}
+              )) : (<>
+                <Box mt={3}>
+                    <Typography variant="h2">
+                        Go catch some Pokémon!
+                    </Typography>
+                </Box>
+              </>)}
             </Grid>
           </Grid>
         </Grid>
